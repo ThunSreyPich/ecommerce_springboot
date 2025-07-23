@@ -16,6 +16,8 @@ public class Product {
     private double price;
 
     private String description;
+    private String image; // <-- Add this field
+
 
     @ManyToOne
     @JoinColumn(name = "category_id") // foreign key column
@@ -23,7 +25,8 @@ public class Product {
 
     public Product() {}
 
-    public Product(String name, double price, String description, Category category) {
+    public Product(String image, String name, double price, String description, Category category) {
+        this.image = image;
         this.name = name;
         this.price = price;
         this.description = description;
@@ -33,6 +36,13 @@ public class Product {
     // Getters and Setters
     public Long getId() { return id; }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
     public String getName() { return name; }
 
     public void setName(String name) { this.name = name; }
@@ -48,4 +58,6 @@ public class Product {
     public Category getCategory() { return category; }
 
     public void setCategory(Category category) { this.category = category; }
+
+
 }

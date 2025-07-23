@@ -25,17 +25,30 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable() // optional, disable for dev
+                .csrf().disable() // Disable CSRF for development & Postman use
+
                 .authorizeHttpRequests(auth -> auth
+                        // Public pages
                         .requestMatchers("/", "/shop/**", "/login", "/css/**", "/js/**").permitAll()
+
+                        // Public API access (e.g., for Postman or mobile apps)
+                        .requestMatchers("/api/**").permitAll()
+
+                        // Admin dashboard
                         .requestMatchers("/dashboard/**").hasRole("ADMIN")
+
+                        // Everything else
                         .anyRequest().authenticated()
                 )
+
+                // Form login config
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/dashboard", true)
                         .permitAll()
                 )
+
+                // Logout config
                 .logout(logout -> logout.permitAll());
 
         return http.build();

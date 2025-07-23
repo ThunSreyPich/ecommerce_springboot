@@ -1,6 +1,9 @@
+<!-- templates/fragments/dashboard-layout.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(content)">
+<head>
+    <title>Dashboard</title>
     <style>
         body {
             margin: 0;
@@ -9,7 +12,6 @@
             height: 100vh;
             background-color: #f8f9fa;
         }
-
         .sidebar {
             width: 220px;
             background-color: #343a40;
@@ -18,7 +20,6 @@
             flex-direction: column;
             padding-top: 2rem;
         }
-
         .sidebar a {
             padding: 1rem 1.5rem;
             color: white;
@@ -26,20 +27,16 @@
             display: block;
             transition: background-color 0.3s;
         }
-
         .sidebar a:hover {
             background-color: #495057;
         }
-
         .sidebar .logout {
             margin-top: auto;
             background-color: #dc3545;
         }
-
         .sidebar .logout:hover {
             background-color: #c82333;
         }
-
         .main-content {
             flex: 1;
             padding: 2rem;
@@ -47,8 +44,7 @@
         }
     </style>
 </head>
-
-<body th:fragment="layout(content)">
+<body>
 <div class="sidebar">
     <a th:href="@{/dashboard}">Dashboard</a>
     <a th:href="@{/dashboard/products}">Products</a>

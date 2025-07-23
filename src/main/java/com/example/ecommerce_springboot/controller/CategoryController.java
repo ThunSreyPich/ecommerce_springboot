@@ -5,6 +5,9 @@ import com.example.ecommerce_springboot.repository.CategoryRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/dashboard/categories")
@@ -18,8 +21,9 @@ public class CategoryController {
 
     @GetMapping
     public String listCategories(Model model) {
-        model.addAttribute("categories", categoryRepository.findAll());
-        return "dashboard/categories";  // your categories.html view
+        List<Category> categories = categoryRepository.findAllByOrderByIdDesc();
+        model.addAttribute("categories", categories);
+        return "dashboard/categories"; // Your view page
     }
 
     // Create category
@@ -31,25 +35,28 @@ public class CategoryController {
     }
 
     @PostMapping("/save")
-    public String saveCategory(@ModelAttribute Category category) {
+    public String saveCategory(@ModelAttribute Category category, RedirectAttributes redirectAttributes) {
+        System.out.println("💡 DEBUG: category.id = " + category.getId()); // check if ID is null or not
+
         categoryRepository.save(category);
+        redirectAttributes.addFlashAttribute("success", "Category saved successfully!");
         return "redirect:/dashboard/categories";
     }
 
-
-//    Edit
+    //    Edit
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Category category = categoryRepository.findById(id).orElseThrow();
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid category Id:" + id));
         model.addAttribute("category", category);
-        model.addAttribute("isEdit", true);  // <-- This tells the view we're editing
+        model.addAttribute("isEdit", true);
         return "dashboard/category-form";
     }
 
     @PostMapping("/update")
     public String updateCategory(@ModelAttribute Category category) {
-        categoryRepository.save(category); // This will update if ID exists
-        return "redirect:/dashboard/categories"; // Redirect back to list after update
+        categoryRepository.save(category);
+        return "redirect:/dashboard/categories";
     }
 
     @PostMapping("/delete/{id}")
