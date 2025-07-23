@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/dashboard-layout :: head"><title>Categories</title></head>
+<body th:replace="fragments/dashboard-layout :: layout(~{::section})">
+<section>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>All Categories</h2>
+        <a th:href="@{/dashboard/categories/new}">
+            <button style="padding: 0.5rem 1rem; background-color: #007bff; color: white; border: none; border-radius: 5px;">
+                + New Category
+            </button>
+        </a>
+    </div>
+
+    <div style="margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 1.5rem;">
+        <div th:each="cat : ${categories}"
+             style="background-color: #ffffff; padding: 1rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); width: 200px; display: flex; flex-direction: column; justify-content: space-between;">
+
+            <h3 th:text="${cat.name}" style="margin: 0 0 1rem 0;"></h3>
+
+            <div style="display: flex; gap: 0.5rem;">
+                <a th:href="@{'/dashboard/categories/edit/' + ${cat.id}}">
+                    <button style="padding: 0.4rem 0.8rem; border: none; background-color: #ffc107; color: white; border-radius: 5px; cursor: pointer;">
+                        Edit
+                    </button>
+                </a>
+                <form th:action="@{'/dashboard/categories/delete/' + ${cat.id}}" method="post" th:onsubmit="return confirm('Are you sure?');">
+                    <button type="submit" style="padding: 0.4rem 0.8rem; border: none; background-color: #dc3545; color: white; border-radius: 5px; cursor: pointer;">
+                        Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

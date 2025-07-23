@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        .sidebar {
+            width: 220px;
+            background-color: #343a40;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 2rem;
+        }
+
+        .sidebar a {
+            padding: 1rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+
+        .sidebar .logout {
+            margin-top: auto;
+            background-color: #dc3545;
+        }
+
+        .sidebar .logout:hover {
+            background-color: #c82333;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .main-content h1 {
+            margin-bottom: 1rem;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .card h3 {
+            margin: 0 0 0.5rem;
+            color: #333;
+        }
+
+        .card p {
+            color: #666;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <a th:href="@{/dashboard}">Dashboard</a>
+    <a th:href="@{/dashboard/products}">Products</a>
+    <a th:href="@{/dashboard/categories}">Categories</a>
+    <a th:href="@{/dashboard/users}">Users</a>
+    <a th:href="@{/dashboard/orders}">Orders</a>
+    <a th:href="@{/logout}" class="logout">Logout</a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <h1>Welcome, Admin!</h1>
+    <p>Select a section from the sidebar to manage your store.</p>
+
+    <div class="card-container">
+        <div class="card">
+            <h3>Products</h3>
+            <p>Manage your product list</p>
+        </div>
+        <div class="card">
+            <h3>Categories</h3>
+            <p>Edit product categories</p>
+        </div>
+        <div class="card">
+            <h3>Users</h3>
+            <p>Handle customer accounts</p>
+        </div>
+        <div class="card">
+            <h3>Orders</h3>
+            <p>View and manage orders</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

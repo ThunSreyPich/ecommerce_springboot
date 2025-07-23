@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        .sidebar {
+            width: 220px;
+            background-color: #343a40;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 2rem;
+        }
+
+        .sidebar a {
+            padding: 1rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+
+        .sidebar .logout {
+            margin-top: auto;
+            background-color: #dc3545;
+        }
+
+        .sidebar .logout:hover {
+            background-color: #c82333;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body th:fragment="layout(content)">
+<div class="sidebar">
+    <a th:href="@{/dashboard}">Dashboard</a>
+    <a th:href="@{/dashboard/products}">Products</a>
+    <a th:href="@{/dashboard/categories}">Categories</a>
+    <a th:href="@{/dashboard/users}">Users</a>
+    <a th:href="@{/dashboard/orders}">Orders</a>
+    <a th:href="@{/logout}" class="logout">Logout</a>
+</div>
+<div class="main-content">
+    <th:block th:replace="${content}"></th:block>
+</div>
+</body>
+</html>
