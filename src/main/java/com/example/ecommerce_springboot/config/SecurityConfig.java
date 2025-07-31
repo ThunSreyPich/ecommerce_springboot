@@ -27,17 +27,23 @@ public class SecurityConfig {
         http
                 .csrf().disable() // Disable CSRF for development & Postman use
 
+//                .authorizeHttpRequests(auth -> auth
+//                        // Public pages
+//                        .requestMatchers("/", "/shop/**", "/login", "/css/**", "/js/**").permitAll()
+//
+//                        // Public API access (e.g., for Postman or mobile apps)
+//                        .requestMatchers("/api/**").permitAll()
+//
+//                        // Admin dashboard
+//                        .requestMatchers("/dashboard/**").hasRole("ADMIN")
+//
+//                        // Everything else
+//                        .anyRequest().authenticated()
+//                )
                 .authorizeHttpRequests(auth -> auth
-                        // Public pages
                         .requestMatchers("/", "/shop/**", "/login", "/css/**", "/js/**").permitAll()
-
-                        // Public API access (e.g., for Postman or mobile apps)
-                        .requestMatchers("/api/**").permitAll()
-
-                        // Admin dashboard
+                        .requestMatchers("/api/**", "/dashboard/categories/api/**").permitAll()
                         .requestMatchers("/dashboard/**").hasRole("ADMIN")
-
-                        // Everything else
                         .anyRequest().authenticated()
                 )
 
