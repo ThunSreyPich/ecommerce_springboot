@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="fragments/dashboard-layout :: layout(~{::section})">
+<head>
+  <title>Edit Product</title>
+</head>
+<body>
+<section>
+  <h2>Edit Product</h2>
+  <form th:action="@{'/dashboard/products/update/' + ${product.id}}" method="post"
+        th:object="${product}" enctype="multipart/form-data">
+    <label>Image:</label><br/>
+    <img th:if="${product.image}" th:src="${product.image}" style="width:100px;height:100px;"><br/>
+    <input type="file" name="imageFile"/><br/><br/>
+
+    <label>Name:</label><br/>
+    <input type="text" th:field="*{name}" required/><br/><br/>
+
+    <label>Price:</label><br/>
+    <input type="number" th:field="*{price}" step="0.01" required/><br/><br/>
+
+    <label>Category:</label><br/>
+    <select th:field="*{category.id}" required>
+      <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+    </select><br/><br/>
+
+    <button type="submit">Update Product</button>
+  </form>
+</section>
+</body>
+</html>
