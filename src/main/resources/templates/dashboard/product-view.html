@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="fragments/dashboard-layout :: layout(~{::section})">
+<head>
+  <title>View Product</title>
+</head>
+<body>
+<section>
+  <h2>View Product</h2>
+  <img th:if="${product.image}" th:src="${product.image}" style="width:150px;height:150px;"><br/>
+  <p><strong>Name:</strong> <span th:text="${product.name}"></span></p>
+  <p><strong>Price:</strong> $<span th:text="${product.price}"></span></p>
+  <p><strong>Category:</strong> <span th:text="${product.category.name}"></span></p>
+  <a href="/dashboard/products">Back to list</a>
+</section>
+</body>
+</html>

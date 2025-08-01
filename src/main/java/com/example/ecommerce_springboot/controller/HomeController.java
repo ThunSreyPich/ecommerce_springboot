@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping("/shop")
-    public String shop() {
-        return "shop";
-    }
+//    @GetMapping("/shop")
+//    public String shop() {
+//        return "shop";
+//    }
 
 //    @GetMapping("/dashboard/categories")
 //    public String categoriesPage() {
