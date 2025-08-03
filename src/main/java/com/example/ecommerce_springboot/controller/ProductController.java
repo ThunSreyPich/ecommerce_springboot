@@ -108,6 +108,7 @@ public class ProductController {
         return "dashboard/products";
     }
 
+
     // Create product
     @PostMapping("/dashboard/products/create")
     public String createProduct(
@@ -117,6 +118,13 @@ public class ProductController {
         saveImageFile(product, imageFile);
         productRepository.save(product);
         return "redirect:/dashboard/products";
+    }
+
+    @GetMapping("/dashboard/products/create")
+    public String showCreateForm(Model model) {
+        model.addAttribute("product", new Product());
+        model.addAttribute("categories", categoryRepository.findAll());
+        return "dashboard/product-create";
     }
 
     // View product (returns modal or a page)
@@ -161,6 +169,7 @@ public class ProductController {
         productRepository.save(product);
         return "redirect:/dashboard/products";
     }
+
 
     // Delete
     @PostMapping("/dashboard/products/delete/{id}")
