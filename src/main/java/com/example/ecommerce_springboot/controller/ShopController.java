@@ -18,8 +18,9 @@ public class ShopController {
     @GetMapping("/shop")
     public String showShopPage(Model model) {
         List<Product> products = productRepository.findAll();
-        System.out.println("Found products: " + products);  // <- Debug output
         model.addAttribute("products", products);
+        model.addAttribute("pageTitle", "Product Shop");
         return "shop";
     }
+
 }

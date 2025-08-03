@@ -5,27 +5,102 @@
   <title>Edit Product</title>
 </head>
 <body>
-<section>
-  <h2>Edit Product</h2>
+<section class="container py-4">
+  <div class="mb-4">
+    <h2>Edit Product</h2>
+  </div>
+
   <form th:action="@{'/dashboard/products/update/' + ${product.id}}" method="post"
-        th:object="${product}" enctype="multipart/form-data">
-    <label>Image:</label><br/>
-    <img th:if="${product.image}" th:src="${product.image}" style="width:100px;height:100px;"><br/>
-    <input type="file" name="imageFile"/><br/><br/>
+        th:object="${product}" enctype="multipart/form-data" class="needs-validation" novalidate>
 
-    <label>Name:</label><br/>
-    <input type="text" th:field="*{name}" required/><br/><br/>
+    <!-- Image Preview -->
+    <div class="mb-3" style="max-width: 300px;">
+      <img th:if="${product.image}" th:src="@{${product.image}}" id="imagePreview"
+           class="img-fluid rounded shadow-sm" style="width: 100%; height: auto;"/>
+    </div>
 
-    <label>Price:</label><br/>
-    <input type="number" th:field="*{price}" step="0.01" required/><br/><br/>
+    <!-- Upload Image -->
+    <div class="mb-3">
+      <label for="imageFile" class="form-label">Upload Image</label>
+      <input id="imageFile" type="file" name="imageFile" class="form-control" onchange="previewImage(this)" />
+    </div>
 
-    <label>Category:</label><br/>
-    <select th:field="*{category.id}" required>
-      <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
-    </select><br/><br/>
+    <!-- Name Field -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input id="name" type="text" th:field="*{name}" class="form-control" placeholder="Enter name" required/>
+      <div class="invalid-feedback">Please enter a product name.</div>
+    </div>
 
-    <button type="submit">Update Product</button>
+    <!-- Price Field -->
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input id="price" type="number" th:field="*{price}" class="form-control" placeholder="Enter price" step="0.01" required/>
+      <div class="invalid-feedback">Please enter a valid price.</div>
+    </div>
+
+    <!-- Category Dropdown -->
+    <div class="mb-3">
+      <label for="category" class="form-label">Category</label>
+      <select id="category" th:field="*{category.id}" class="form-select" required>
+        <option value="" disabled>Select category</option>
+        <option th:each="cat : ${categories}"
+                th:value="${cat.id}"
+                th:text="${cat.name}"
+                th:selected="${cat.id == product.category?.id}">
+        </option>
+      </select>
+      <div class="invalid-feedback">Please select a category.</div>
+    </div>
+
+    <!-- Buttons: Cancel and Update -->
+    <div class="d-flex justify-content-end gap-2 mt-3">
+      <a th:href="@{/dashboard/products}" class="btn btn-secondary">Cancel</a>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+
   </form>
+
+  <script>
+    function previewImage(input) {
+      const preview = document.getElementById('imagePreview');
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onloadend = function() {
+        if (!preview) {
+          const previewContainer = document.querySelector('.image-preview');
+          const newPreview = document.createElement('img');
+          newPreview.id = 'imagePreview';
+          newPreview.classList.add('img-fluid', 'rounded', 'shadow-sm');
+          newPreview.style.maxWidth = '300px';
+          previewContainer.insertBefore(newPreview, previewContainer.firstChild);
+        }
+        document.getElementById('imagePreview').src = reader.result;
+      }
+
+      if (file) {
+        reader.readAsDataURL(file);
+      } else if (preview) {
+        preview.src = "";
+      }
+    }
+
+    // Bootstrap validation example
+    (function () {
+      'use strict'
+      const forms = document.querySelectorAll('.needs-validation')
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()
+  </script>
 </section>
 </body>
 </html>

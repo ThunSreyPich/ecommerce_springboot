@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="fragments/website-layout :: layout(~{::content})">
+
+<section th:fragment="content" class="container py-5">
+    <h1 class="text-center mb-4">About Us</h1>
+    <p>Welcome to our Shop! We are passionate about providing high-quality products at great prices.</p>
+    <p>Our mission is to deliver an outstanding shopping experience by offering a wide range of products, easy navigation, and excellent customer service.</p>
+    <p>Founded in [Year], our store has grown to serve thousands of happy customers.</p>
+    <p>Thank you for visiting us! If you have any questions or feedback, feel free to <a th:href="@{/contact}">contact us</a>.</p>
+</section>
+
+</html>
