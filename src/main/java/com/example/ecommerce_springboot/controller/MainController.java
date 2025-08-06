@@ -16,8 +16,8 @@ public class MainController {
         return "dashboard"; // dashboard.html
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login"; // login.html
-    }
+//    @GetMapping("/login")
+//    public String login() {
+//        return "login"; // login.html
+//    }
 }

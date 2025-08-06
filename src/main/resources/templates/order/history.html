@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="fragments/website-layout :: layout(~{::main_content})">
+<body>
+<section th:fragment="main_content">
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Order History</h2>
+
+        <div th:if="${orders.isEmpty()}" class="alert alert-info">
+            No orders found.
+        </div>
+
+        <div th:unless="${orders.isEmpty()}" class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Products</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td>
+                            <span th:each="product, iterStat : ${order.products}"
+                                  th:text="${product.name} + (${iterStat.last ? '' : ', '})">
+                            </span>
+                    </td>
+                    <td th:text="'$' + ${order.totalAmount}"></td>
+                    <td th:text="${order.status}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <a th:href="@{/shop}" class="btn btn-primary mt-3">Back to Shop</a>
+    </div>
+</section>
+</body>
+</html>

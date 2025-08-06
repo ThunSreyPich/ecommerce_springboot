@@ -1,10 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       th:replace="fragments/website-layout :: layout(~{::main_content})">
 <body>
 <section th:fragment="main_content">
     <h1 class="mb-4 text-center">Welcome to the Shop</h1>
-    <p class="mb-4 text-center">You are browsing as a guest. Explore our products below!</p>
+
+    <div sec:authorize="isAnonymous()">
+        <p class="mb-4 text-center">You are browsing as a guest.
+            <a th:href="@{/login}">Login</a> or <a th:href="@{/register}">Register</a> to make purchases!
+        </p>
+    </div>
+
+<!--    <div sec:authorize="isAuthenticated()">-->
+<!--        <p class="mb-4 text-center">-->
+<!--            Welcome, <span sec:authentication="name"></span>!-->
+<!--            <a th:href="@{/order/history}">View Order History</a> |-->
+<!--&lt;!&ndash;            <a th:href="@{/logout}">Logout</a>&ndash;&gt;-->
+<!--        <form th:action="@{/logout}" method="post" class="d-flex justify-content">-->
+<!--            <button type="submit" class="btn btn-link p-0" style="text-decoration: none;">Logout</button>-->
+<!--        </form>-->
+<!--        </p>-->
+<!--    </div>-->
+
+    <div sec:authorize="isAuthenticated()">
+        <p class="mb-4 text-center">
+            Welcome, <span sec:authentication="name"></span>!
+<!--        <div class="d-flex align-items-center">-->
+            <a th:href="@{/order/history}" class="me-2">View Order History</a> |
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-link p-0" style="text-decoration: none;">Logout</button>
+            </form>
+<!--        </div>-->
+        </p>
+    </div>
+
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
     <div class="row row-cols-1 row-cols-md-3 g-4" th:if="${products != null}">
         <div class="col" th:each="product : ${products}">
@@ -15,7 +47,8 @@
                     <h5 class="card-title" th:text="${product.name}">Product Name</h5>
                     <p class="card-text flex-grow-1" th:text="${product.description}">Description</p>
                     <p class="card-text fw-bold fs-5">$<span th:text="${product.price}">0.00</span></p>
-                    <button class="btn btn-primary mt-auto w-100">Buy Now</button>
+                    <a sec:authorize="isAuthenticated()" th:href="@{/order/buy/{id}(id=${product.id})}"
+                       class="btn btn-primary mt-auto w-100">Buy Now</a>
                 </div>
             </div>
         </div>

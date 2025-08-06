@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="fragments/website-layout :: layout(~{::main_content})">
+<body>
+<section th:fragment="main_content">
+  <h1 class="mb-4 text-center">Purchase Successful!</h1>
+  <p class="text-center">Thank you for your purchase. Your order has been processed successfully.</p>
+  <div class="text-center">
+    <a th:href="@{/}" class="btn btn-primary">Back to Shop</a>
+    <a th:href="@{/order/history}" class="btn btn-secondary">View Order History</a>
+  </div>
+</section>
+</body>
+</html>

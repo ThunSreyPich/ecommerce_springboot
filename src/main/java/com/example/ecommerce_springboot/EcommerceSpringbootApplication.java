@@ -23,6 +23,7 @@ public class EcommerceSpringbootApplication {
 			if (repo.findByUsername("admin") == null) {
 				User admin = new User();
 				admin.setUsername("admin");
+				admin.setEmail("admin@example.com"); // ✅ Add this line
 				admin.setPassword(encoder.encode("admin123"));
 				admin.setRole("ROLE_ADMIN");
 				repo.save(admin);

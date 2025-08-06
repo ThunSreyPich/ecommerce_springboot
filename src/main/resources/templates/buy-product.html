@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="fragments/website-layout :: layout(~{::main_content})">
+<body>
+<section th:fragment="main_content">
+  <h1 class="mb-4 text-center">Confirm Your Purchase</h1>
+
+  <div class="card mx-auto" style="max-width: 500px;">
+    <img th:if="${product.image != null}" th:src="@{${product.image}}"
+         class="card-img-top rounded" style="height: 200px; object-fit: cover;" alt="Product Image" />
+    <div class="card-body">
+      <h5 class="card-title" th:text="${product.name}">Product Name</h5>
+      <p class="card-text" th:text="${product.description}">Description</p>
+      <p class="card-text fw-bold fs-5">$<span th:text="${product.price}">0.00</span></p>
+      <form th:action="@{/order/confirm/{id}(id=${product.id})}" method="post">
+        <button type="submit" class="btn btn-primary w-100">Confirm Purchase</button>
+      </form>
+      <a th:href="@{/}" class="btn btn-secondary w-100 mt-2">Cancel</a>
+    </div>
+  </div>
+</section>
+</body>
+</html>
