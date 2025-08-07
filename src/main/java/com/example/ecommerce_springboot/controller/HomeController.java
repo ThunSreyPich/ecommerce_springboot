@@ -33,15 +33,15 @@ public class HomeController {
 //        return "dashboard/categories";
 //    }
 
-    @GetMapping("/dashboard/users")
-    public String usersPage() {
-        return "dashboard/users";
-    }
+//    @GetMapping("/dashboard/users")
+//    public String usersPage() {
+//        return "dashboard/users";
+//    }
 
-    @GetMapping("/dashboard/orders")
-    public String ordersPage() {
-        return "dashboard/orders";
-    }
+//    @GetMapping("/dashboard/orders")
+//    public String ordersPage() {
+//        return "dashboard/orders";
+//    }
 
 //    @Autowired
 //    private CategoryRepository categoryRepository;
